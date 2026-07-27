@@ -1,36 +1,128 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Jhon Aire - HVAC Web Platform
 
-## Getting Started
+Professional climate control services platform with full-stack features.
 
-First, run the development server:
+## Tech Stack
+
+- **Framework:** Next.js 16 (App Router) + TypeScript
+- **Database:** PostgreSQL + Prisma 7 ORM
+- **Auth:** Custom JWT with RBAC
+- **Styling:** Tailwind CSS v4
+- **Payments:** Stripe (sandbox ready)
+- **Testing:** Vitest
+
+## Local Setup
+
+### Prerequisites
+
+- Node.js 20.19+
+- PostgreSQL 14+
+- npm or pnpm
+
+### Installation
 
 ```bash
+# Clone the repository
+git clone <repo-url>
+cd jhon_aire
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your database URL and secrets
+
+# Generate Prisma client
+npx prisma generate
+
+# Push schema to database
+npx prisma db push
+
+# Seed demo data
+node prisma/seed.js
+
+# Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Demo Accounts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Email | Password | Role |
+|-------|----------|------|
+| admin@jhon-aire.cl | admin123 | ADMIN |
+| ops@jhon-aire.cl | ops123 | OPERATIONS |
+| support@jhon-aire.cl | support123 | SUPPORT |
+| tech@jhon-aire.cl | tech123 | TECHNICIAN |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Environment Variables
 
-## Learn More
+See `.env.example` for all required variables:
 
-To learn more about Next.js, take a look at the following resources:
+- `DATABASE_URL` - PostgreSQL connection string
+- `AUTH_SECRET` - JWT signing secret
+- `STRIPE_SECRET_KEY` - Stripe sandbox key
+- `STRIPE_WEBHOOK_SECRET` - Stripe webhook secret
+- `RESEND_API_KEY` - Email service key
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Scripts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run start        # Start production server
+npm run test         # Run tests
+npm run test:watch   # Run tests in watch mode
+npm run lint         # Run ESLint
+```
 
-## Deploy on Vercel
+## Project Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+src/
+  app/
+    (public)/        # Public pages (catalog, quote, checkout)
+    dashboard/       # Protected dashboard pages
+    api/             # API routes
+  components/        # React components
+  lib/               # Utilities (auth, db, validation)
+prisma/
+  schema.prisma      # Database schema
+  seed.js            # Seed script
+tests/               # Test files
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Features
+
+### Phase 1 - Foundations
+- User authentication with JWT
+- RBAC for 4 roles (Admin, Operations, Support, Technician)
+- Protected dashboards with light/dark mode
+
+### Phase 2 - Public Portal
+- Product catalog with filters
+- Quote calculator wizard
+- Checkout with Stripe integration
+- Scheduling system
+
+### Phase 3 - Operations
+- Work order Kanban board
+- Mobile-first technician app
+- Digital signature capture
+- Safety checklist
+
+### Phase 4 - Support
+- Equipment registry by serial number
+- Warranty tracking with alerts
+- Support ticket system with SLA
+
+### Phase 5 - Admin/CRM
+- Customer 360° profiles
+- Financial dashboard
+- Excel export for reports
+
+### Phase 6 - Hardening
+- Rate limiting on auth/quote endpoints
+- Security headers (CSP, X-Frame-Options, etc.)
+- 51 unit tests passing
+# JMAC
