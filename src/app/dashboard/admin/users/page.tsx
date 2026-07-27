@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useRouter } from "next/navigation";
 
 interface Customer {
   name: string;
@@ -13,6 +14,7 @@ interface Customer {
 }
 
 export default function AdminUsersPage() {
+  const router = useRouter();
   const [customers, setCustomers] = React.useState<Customer[]>([]);
   const [loading, setLoading] = React.useState(true);
 
@@ -64,7 +66,11 @@ export default function AdminUsersPage() {
             </div>
           ) : (
             customers.map((customer) => (
-              <div key={customer.email} className="p-4 hover:bg-accent/50">
+              <button
+                key={customer.email}
+                onClick={() => router.push(`/dashboard/admin/users/${encodeURIComponent(customer.email)}`)}
+                className="w-full text-left p-4 hover:bg-accent/50 block"
+              >
                 <div className="flex items-start justify-between">
                   <div>
                     <p className="font-medium">{customer.name}</p>
@@ -84,7 +90,7 @@ export default function AdminUsersPage() {
                 <p className="text-sm text-muted-foreground mt-2">
                   {customer.address}
                 </p>
-              </div>
+              </button>
             ))
           )}
         </div>
